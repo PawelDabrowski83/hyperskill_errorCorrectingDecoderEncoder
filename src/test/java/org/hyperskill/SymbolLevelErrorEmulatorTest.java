@@ -66,4 +66,89 @@ public class SymbolLevelErrorEmulatorTest {
                 Arguments.of('!', -1)
         );
     }
+
+    @DisplayName("should createRandomCharErrorEverySection() puts a random error in every n-length substring")
+    @ParameterizedTest(name = "{index} => expected={0}, seed={1}, sectionLength={2}, text={3}")
+    @MethodSource("createRandomCharErrorEverySectionArgumentsProvider")
+    void createRandomCharErrorEverySection(String expected, int seed, int sectionLength, SymbolLevelErrorEmulator symbolLevelErrorEmulator) {
+        Random random = new Random(seed);
+        random.nextDouble();
+        assertEquals(expected, symbolLevelErrorEmulator.createRandomCharErrorEverySection(random, sectionLength));
+    }
+    private static Stream<Arguments> createRandomCharErrorEverySectionArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "[la XaDkotr",
+                        0,
+                        3,
+                        new SymbolLevelErrorEmulator("Ala ma kota")
+                ),
+                Arguments.of(
+                        "L[rem iXsumDavangarrum",
+                        0,
+                        5,
+                        new SymbolLevelErrorEmulator("Lorem ipsum avangardum")
+                ),
+                Arguments.of(
+                        "abc",
+                        0,
+                        0,
+                        new SymbolLevelErrorEmulator("abc")
+                ),
+                Arguments.of(
+                        "",
+                        0,
+                        2,
+                        new SymbolLevelErrorEmulator("")
+                ),
+                Arguments.of(
+                        "Ala ma kota",
+                        0,
+                        -1,
+                        new SymbolLevelErrorEmulator("Ala ma kota")
+                )
+        );
+    }
+
+    @DisplayName("should insertRandomCharIfEligible() is switching random char only if randomized position is lesser than word size")
+    @ParameterizedTest(name = "{index} => expected={0}, seed={1}, text={2}, sectionLength={3}")
+    @MethodSource("insertRandomCharIfEligibleArgumentsProvider")
+    void insertRandomCharIfEligible(String expected, int seed, String text, int sectionLength) {
+        Random random = new Random(seed);
+        assertEquals(expected, SymbolLevelErrorEmulator.insertRandomCharIfEligible(text, random, sectionLength));
+    }
+    private static Stream<Arguments> insertRandomCharIfEligibleArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "Ala",
+                        0,
+                        "Ala",
+                        6
+                ),
+                Arguments.of(
+                        "Pie6",
+                        0,
+                        "Pies",
+                        6
+                ),
+                Arguments.of(
+                        "",
+                        0,
+                        "",
+                        6
+                ),
+                Arguments.of(
+                        "Kot",
+                        0,
+                        "Kot",
+                        0
+                ),
+                Arguments.of(
+                        "Kot",
+                        0,
+                        "Kot",
+                        -1
+                )
+        );
+    }
 }
