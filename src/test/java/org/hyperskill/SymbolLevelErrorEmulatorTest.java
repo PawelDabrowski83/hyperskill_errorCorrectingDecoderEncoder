@@ -78,13 +78,13 @@ public class SymbolLevelErrorEmulatorTest {
     private static Stream<Arguments> createRandomCharErrorEverySectionArgumentsProvider() {
         return Stream.of(
                 Arguments.of(
-                        "[la XaDkotr",
+                        "[la XaDkota",
                         0,
                         3,
                         new SymbolLevelErrorEmulator("Ala ma kota")
                 ),
                 Arguments.of(
-                        "Lor6m ipSum?avan|ardum",
+                        "L[rem iXsumDavangarrum",
                         0,
                         5,
                         new SymbolLevelErrorEmulator("Lorem ipsum avangardum")
