@@ -7,6 +7,9 @@ public class SymbolLevelCorrection {
     private final String text;
 
     public SymbolLevelCorrection(String text) {
+        if (text == null) {
+            text = "";
+        }
         this.text = text;
     }
 
@@ -22,9 +25,6 @@ public class SymbolLevelCorrection {
     }
 
     public SymbolLevelCorrection multiplyMessage(int multiplier) {
-        if (text == null) {
-            return new SymbolLevelCorrection("");
-        }
         if (text.isEmpty()) {
             return this;
         }
