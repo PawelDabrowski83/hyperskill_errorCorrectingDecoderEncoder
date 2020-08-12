@@ -82,11 +82,11 @@ public class SymbolLevelErrorEmulator {
             return text;
         }
         int randomPosition = getRandomCharPosition(sectionRange, random);
-        if (randomPosition > text.length()) {
+        if (randomPosition >= text.length()) {
             return text;
         }
         StringBuilder builder = new StringBuilder(text);
-        builder.setCharAt(randomPosition - 1, createRandomChar(random));
+        builder.setCharAt(randomPosition, createRandomChar(random));
         return builder.toString();
     }
 

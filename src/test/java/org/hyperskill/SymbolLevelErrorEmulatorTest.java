@@ -84,7 +84,7 @@ public class SymbolLevelErrorEmulatorTest {
                         new SymbolLevelErrorEmulator("Ala ma kota")
                 ),
                 Arguments.of(
-                        "L[rem iXsumDavangarrum",
+                        "Lor6m ipSum?avan|ardum",
                         0,
                         5,
                         new SymbolLevelErrorEmulator("Lorem ipsum avangardum")
@@ -126,7 +126,7 @@ public class SymbolLevelErrorEmulatorTest {
                         6
                 ),
                 Arguments.of(
-                        "Pie6",
+                        "Pies",
                         0,
                         "Pies",
                         6
@@ -148,6 +148,24 @@ public class SymbolLevelErrorEmulatorTest {
                         0,
                         "Kot",
                         -1
+                ),
+                Arguments.of(
+                        "Lore6 ipsum",
+                        0,
+                        "Lorem ipsum",
+                        6
+                ),
+                Arguments.of(
+                        "Kote6",
+                        0,
+                        "Kotek",
+                        6
+                ),
+                Arguments.of(
+                        "12346",
+                        0,
+                        "12346",
+                        6
                 )
         );
     }
