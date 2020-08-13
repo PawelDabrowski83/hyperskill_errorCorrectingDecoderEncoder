@@ -140,11 +140,47 @@ public class SymbolLevelCorrectionTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void shouldFindRepeatedCharGivenShortStringThrowException() {
-        SymbolLevelCorrection.findRepeatedChar("a");
+        SymbolLevelCorrection.findRepeatedChar("aa");
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void shouldFindRepeatedCharGivenStringWithoutRepetitionThrowException() {
         SymbolLevelCorrection.findRepeatedChar("abcd");
+    }
+
+    @DisplayName("should decodeMultipliedMessage returns message without char multiplication and errors")
+    @ParameterizedTest(name = "{index} => expected={0}, text={1}, multiplier={2}")
+    @MethodSource("decodeMultipliedMessageArgumentsProvider")
+    void decodeMultipliedMessage(SymbolLevelCorrection expected, SymbolLevelCorrection given, int multiplier) {
+        assertEquals(expected, given.decodeMultipliedMessage(multiplier));
+    }
+    private static Stream<Arguments> decodeMultipliedMessageArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new SymbolLevelCorrection("abc"),
+                        new SymbolLevelCorrection("axa$bbcc|"),
+                        3
+                ),
+                Arguments.of(
+                        new SymbolLevelCorrection(";a;"),
+                        new SymbolLevelCorrection("y;;a5a;;["),
+                        3
+                ),
+                Arguments.of(
+                        new SymbolLevelCorrection("kotek"),
+                        new SymbolLevelCorrection("Dkkkóooott$tee8ekkk3"),
+                        4
+                ),
+                Arguments.of(
+                        new SymbolLevelCorrection("test"),
+                        new SymbolLevelCorrection("test"),
+                        1
+                ),
+                Arguments.of(
+                        new SymbolLevelCorrection("abc"),
+                        new SymbolLevelCorrection("abc"),
+                        Integer.MIN_VALUE
+                )
+        );
     }
 }
