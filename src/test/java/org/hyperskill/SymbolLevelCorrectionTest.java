@@ -1,5 +1,6 @@
 package org.hyperskill;
 
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -102,5 +103,48 @@ public class SymbolLevelCorrectionTest {
                         Integer.MIN_VALUE
                 )
         );
+    }
+
+    @DisplayName("should findRepeatedChar returns char repeated more than once in given string")
+    @ParameterizedTest(name = "{index} => expected={0}, text={1}")
+    @MethodSource("findRepeatedCharArgumentsProvider")
+    void findRepeatedChar(char expected, String given) {
+        assertEquals(expected, SymbolLevelCorrection.findRepeatedChar(given));
+    }
+    private static Stream<Arguments> findRepeatedCharArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        'a',
+                        "aaka"
+                ),
+                Arguments.of(
+                        'z',
+                        "azzzzzzzzzzzzzzzzzzzzzzz"
+                ),
+                Arguments.of(
+                        ';',
+                        ";;a"
+                )
+        );
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldFindRepeatedCharGivenNullThrowException() {
+        SymbolLevelCorrection.findRepeatedChar(null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldFindRepeatedCharGivenEmptyThrowException() {
+        SymbolLevelCorrection.findRepeatedChar("");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldFindRepeatedCharGivenShortStringThrowException() {
+        SymbolLevelCorrection.findRepeatedChar("a");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldFindRepeatedCharGivenStringWithoutRepetitionThrowException() {
+        SymbolLevelCorrection.findRepeatedChar("abcd");
     }
 }
