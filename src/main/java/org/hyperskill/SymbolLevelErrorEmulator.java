@@ -71,6 +71,13 @@ public class SymbolLevelErrorEmulator {
         return (int) Math.floor(textLength * random.nextDouble());
     }
 
+    /**
+     * Insert random char in random position of sectionRange if exist in given text
+     * @param text if text is shorter than randomized position, return it without changes
+     * @param random for testing
+     * @param sectionRange random position is calculated within given sectionRange
+     * @return text. If random char is the same as original one, repeat randomizing.
+     */
     protected static String insertRandomCharIfEligible(String text, Random random, int sectionRange) {
         if (text == null || text.isEmpty()) {
             return "";
@@ -86,7 +93,12 @@ public class SymbolLevelErrorEmulator {
             return text;
         }
         StringBuilder builder = new StringBuilder(text);
-        builder.setCharAt(randomPosition, createRandomChar(random));
+        char currentChar = builder.charAt(randomPosition);
+        char randomChar = createRandomChar(random);
+        while (currentChar == randomChar) {
+            randomChar = createRandomChar(random);
+        }
+        builder.setCharAt(randomPosition, randomChar);
         return builder.toString();
     }
 

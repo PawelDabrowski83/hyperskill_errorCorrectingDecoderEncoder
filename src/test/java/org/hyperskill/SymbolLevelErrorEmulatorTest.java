@@ -162,7 +162,7 @@ public class SymbolLevelErrorEmulatorTest {
                         6
                 ),
                 Arguments.of(
-                        "12346",
+                        "1234[",
                         0,
                         "12346",
                         6
