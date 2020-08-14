@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class SymbolLevelCorrection {
+public class SymbolLevelCorrection{
 
     private final String text;
 

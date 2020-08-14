@@ -2,7 +2,7 @@ package org.hyperskill;
 
 import java.util.Random;
 
-public class SymbolLevelErrorEmulator {
+public class SymbolLevelErrorEmulator{
 
     protected static final byte PRINTABLE_CHAR_LOWER_BOUND = 32;
     protected static final byte PRINTABLE_CHAR_UPPER_BOUND = 126;
@@ -29,7 +29,7 @@ public class SymbolLevelErrorEmulator {
         if (text == null || text.isEmpty()) {
             return "";
         }
-        int randomPositionInText = getRandomCharPosition(text.length(), random);
+        int randomPositionInText = Utils.getRandomPosition(text.length(), random);
         StringBuilder stringBuilder = new StringBuilder(text);
         stringBuilder.setCharAt(randomPositionInText, createRandomChar(random));
         return stringBuilder.toString();
@@ -61,15 +61,7 @@ public class SymbolLevelErrorEmulator {
         return builder.toString();
     }
 
-    private static int getRandomCharPosition(int textLength, Random random) {
-        if (textLength < 1) {
-            return -1;
-        }
-        if (random == null) {
-            random = new Random();
-        }
-        return (int) Math.floor(textLength * random.nextDouble());
-    }
+
 
     /**
      * Insert random char in random position of sectionRange if exist in given text
@@ -88,7 +80,7 @@ public class SymbolLevelErrorEmulator {
         if (sectionRange < 1) {
             return text;
         }
-        int randomPosition = getRandomCharPosition(sectionRange, random);
+        int randomPosition = Utils.getRandomPosition(sectionRange, random);
         if (randomPosition >= text.length()) {
             return text;
         }
