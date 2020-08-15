@@ -46,6 +46,11 @@ public class ByteContainer {
         return new ByteContainer(bytes);
     }
 
+    public void writeFile(File file) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        Utils.copy(bais, new FileOutputStream(file), 100000);
+    }
+
     public ByteContainer randomizeEveryByte(Random random) {
         byte[] buffer = new byte[getBytes().length];
         int counter = 0;
@@ -58,6 +63,5 @@ public class ByteContainer {
 
         return new ByteContainer(buffer);
     }
-
 
 }

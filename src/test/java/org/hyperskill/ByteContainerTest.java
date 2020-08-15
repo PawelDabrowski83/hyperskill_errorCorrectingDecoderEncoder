@@ -32,7 +32,7 @@ public class ByteContainerTest {
         String filePath = "src/test/resources/test.csv";
         File file = new File(filePath);
         try {
-            assertEquals(Arrays.toString(actual.getBytes()), Arrays.toString(ByteContainer.readFile(file).getBytes()));
+            assertArrayEquals(actual.getBytes(), ByteContainer.readFile(file).getBytes());
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("File not found");
@@ -70,6 +70,30 @@ public class ByteContainerTest {
                         new ByteContainer(new byte[]{
                                 't', 'e', 's', 't'
                         })
+                )
+        );
+    }
+
+    @DisplayName("should writeFile() saves object to file with given name")
+    @ParameterizedTest(name = "{index} => expected={0}, filepath={1}, source={2}")
+    @MethodSource("writeFileArgumentsProvider")
+    void writeFile(byte[] expected, String filepath, ByteContainer source) {
+        File file = new File(filepath);
+        ByteContainer actual = new ByteContainer(new byte[0]);
+        try {
+            source.writeFile(file);
+            actual = ByteContainer.readFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assertArrayEquals(expected, actual.getBytes());
+    }
+    private static Stream<Arguments> writeFileArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new byte[]{'t', 'e', 's', 't'},
+                        "src/test/resources/written.txt",
+                        new ByteContainer(new byte[]{'t', 'e', 's', 't'})
                 )
         );
     }
