@@ -17,3 +17,12 @@ Stage 3/5: Bit-level error emulator
 <p>In this stage, you should write a program that reads the text the user wants to send from the send.txt, and simulate the sending through a poor internet connection making one-bit errors in every byte of the text. Notice that this text is no longer a string since after manipulations in every byte it may happen to be that some bytes didn't correspond to a specific character in the table because Java does not use ASCII table representation in their String implementation. Java uses UNICODE that happens to match with ASCII in the first 128 symbols, but no further. The String class is too complicated for low-level manipulations so you should use bytes or chars instead.
 
 The received message which contains an error in a single bit in every byte should be saved into received.txt.</p>
+
+Stage 4/5: Bit-level correction code
+<p>The program in this stage should work in 3 modes: encode, send and decode.
+   
+   If the mode is encode then you need to take the text from send.txt, convert it to ready-to-send form (where you have three significant bits per byte) and save the resulted bytes into the file named encoded.txt.
+   
+   If the mode is send, you should take the file from encoded.txt and simulate the errors in its bytes (1 bit per byte) and save the resulted bytes into the file named received.txt.
+   
+   If the mode is decode, you should take the file from received.txt and decode it to the normal text. Save the text into the file named decoded.txt.</p>
