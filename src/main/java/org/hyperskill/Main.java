@@ -1,5 +1,7 @@
 package org.hyperskill;
 
+import org.hyperskill.model.Pair;
+
 import java.util.Scanner;
 
 public class Main {
@@ -10,7 +12,9 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             command = readInput(scanner).toString();
         }
-        System.out.printf("your mode: %s%n", command);
+        System.out.println(Pair.ONE_ONE);
+        System.out.println(Pair.ONE_ONE);
+        System.out.println(Pair.ONE_ONE);
     }
 
     private static WorkingMode readInput(Scanner scanner) {

@@ -32,6 +32,6 @@ public class Bit {
 
     @Override
     public String toString() {
-        return "value";
+        return String.valueOf(getValue());
     }
 }

@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pair {
+    public static final Pair ZERO_ZERO = new Pair(Bit.ZERO, Bit.ZERO);
+    public static final Pair ONE_ONE = new Pair(Bit.ONE, Bit.ONE);
+    public static final Pair ZERO_ONE = new Pair(Bit.ZERO, Bit.ONE);
+    public static final Pair ONE_ZERO = new Pair(Bit.ONE, Bit.ZERO);
 
     List<Bit> pair;
 
-    public Pair(Bit b1, Bit b2) {
+    private Pair(Bit b1, Bit b2) {
         if (b1 == null) {
             b1 = Bit.ZERO;
         }
@@ -15,13 +19,6 @@ public class Pair {
             b2 = Bit.ZERO;
         }
         this.pair = List.of(b1, b2);
-    }
-
-    public Pair(Bit bit) {
-        if (bit == null) {
-            bit = Bit.ZERO;
-        }
-        this.pair = List.of(bit, bit);
     }
 
     @Override
@@ -39,8 +36,13 @@ public class Pair {
 
     @Override
     public String toString() {
-        return "Pair{" +
-                "pair=" + pair +
-                '}';
+        return "Pair{" + pair + '}';
+    }
+
+    public int getValue() {
+        if (Pair.ZERO_ZERO.equals(this)) {
+            return 0;
+        }
+        return 1;
     }
 }
