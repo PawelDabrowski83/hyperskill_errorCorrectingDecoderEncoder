@@ -28,12 +28,16 @@ public class ByteUtilsTest {
                         new byte[]{(byte) 0b0000_0000}
                 ),
                 Arguments.of(
-                        new Byte[]{Byte.ONES},
-                        new byte[]{(byte) 0b1111_1111}
+                        new Byte[]{new Byte(0b0111_1111)},
+                        new byte[]{(byte) 0b111_1111}
                 ),
                 Arguments.of(
-                        new Byte[]{Byte.ONES, Byte.ZEROS},
-                        new byte[]{(byte) 0b1111_1111, (byte) 0b1111_1111, (byte) 0b0000_0000}
+                        new Byte[]{new Byte(0b0111_1111), new Byte(0b0111_1111), Byte.ZEROS},
+                        new byte[]{(byte) 0b111_1111, (byte) 0b111_1111, (byte) 0b000_0000}
+                ),
+                Arguments.of(
+                        new Byte[]{new Byte(0b0010_0011), new Byte(0b0100_0101)},
+                        new byte[]{(byte) 0b010_0011, (byte) 0b100_0101}
                 )
         );
     }
