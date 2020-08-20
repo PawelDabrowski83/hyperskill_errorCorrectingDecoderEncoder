@@ -14,24 +14,26 @@ public class ByteUtilsTest {
     @DisplayName("should boxByteArray() convert byte[] to Byte[]")
     @ParameterizedTest(name = "{index} => expected={0}, given={1}")
     @MethodSource("boxByteArrayArgumentsProvider")
-    void boxByteArray(ByteWithParity[] expected, byte[] given) {
+    void boxByteArray(OrderedByte[] expected, byte[] given) {
         assertArrayEquals(expected, ByteUtils.boxByteArray(given));
     }
     private static Stream<Arguments> boxByteArrayArgumentsProvider() {
         return Stream.of(
                 Arguments.of(
-                        new ByteWithParity[0],
+                        new Byte[0],
                         new byte[0]
                 ),
                 Arguments.of(
-                        new ByteWithParity[]{ByteWithParity.ZEROS},
+                        new Byte[]{Byte.ZEROS},
                         new byte[]{(byte) 0b0000_0000}
                 ),
                 Arguments.of(
-                        new ByteWithParity[]{ByteWithParity.ONES},
+                        new Byte[]{Byte.ONES},
                         new byte[]{(byte) 0b1111_1111}
                 ),
                 Arguments.of(
+                        new Byte[]{Byte.ONES, Byte.ZEROS},
+                        new byte[]{(byte) 0b1111_1111, (byte) 0b1111_1111, (byte) 0b0000_0000}
                 )
         );
     }

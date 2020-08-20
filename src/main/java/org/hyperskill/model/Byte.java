@@ -30,6 +30,29 @@ public class Byte implements OrderedByte{
         this.bits = temp;
     }
 
+    public Byte(int binaryAsNumber) {
+        if (binaryAsNumber < 0) {
+            binaryAsNumber = 0;
+        }
+        if (binaryAsNumber > 255) {
+            binaryAsNumber %= 255;
+        }
+        StringBuilder binaryBuilder = new StringBuilder(Integer.toBinaryString(binaryAsNumber));
+        while (binaryBuilder.length() < 8) {
+            binaryBuilder.insert(0, 0);
+        }
+        List<Bit> temp = new ArrayList<>();
+        String binary = binaryBuilder.toString();
+        for (char c : binary.toCharArray()) {
+            if (c == '0') {
+                temp.add(Bit.ZERO);
+            } else {
+                temp.add(Bit.ONE);
+            }
+        }
+        this.bits = temp;
+    }
+
     protected List<Bit> checkNullBits(List<Bit> bits) {
         if (bits == null || bits.size() == 0) {
             return Collections.emptyList();

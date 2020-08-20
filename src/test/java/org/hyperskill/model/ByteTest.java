@@ -79,6 +79,37 @@ public class ByteTest {
         );
     }
 
+    @DisplayName("should int constructor work")
+    @ParameterizedTest(name = "{index} => expected={0}, int={1}")
+    @MethodSource("constructorIntArgumentsProvider")
+    void constructorInt(Byte expected, int given) {
+        assertEquals(expected, new Byte(given));
+    }
+    private static Stream<Arguments> constructorIntArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        Byte.ZEROS,
+                        0b0000_0000
+                ),
+                Arguments.of(
+                        Byte.ONES,
+                        0b1111_1111
+                ),
+                Arguments.of(
+                        new Byte(List.of(Bit.ZERO, Bit.ONE, Bit.ZERO, Bit.ONE), true),
+                        0b0101_1111
+                ),
+                Arguments.of(
+                        new Byte(List.of(Bit.ZERO, Bit.ONE, Bit.ZERO, Bit.ONE), false),
+                        0b0101_0000
+                ),
+                Arguments.of(
+                        new Byte(List.of(Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ONE, Bit.ZERO), false),
+                        0b0000_0010
+                )
+        );
+    }
+
     @DisplayName("should getValue returns numerical value of byte")
     @ParameterizedTest(name = "{index} => expected={0}, given={1}")
     @MethodSource("getValueArgumentsProvider")

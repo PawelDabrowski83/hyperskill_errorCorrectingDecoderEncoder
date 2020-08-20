@@ -1,5 +1,7 @@
 package org.hyperskill;
 
+import org.hyperskill.model.ByteContainer;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -10,6 +12,7 @@ public class Application {
     private static final String ENCODED_FILE = "encoded.txt";
     private static final String DECODED_FILE = "decoded.txt";
     private ContainerUtils containerUtils;
+    private ByteContainer byteContainer;
 
     public void encode() {
         try {
