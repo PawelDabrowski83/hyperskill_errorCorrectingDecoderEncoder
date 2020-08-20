@@ -1,5 +1,6 @@
 package org.hyperskill.model;
 
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -76,5 +77,50 @@ public class ByteTest {
                         true
                 )
         );
+    }
+
+    @DisplayName("should getValue returns numerical value of byte")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("getValueArgumentsProvider")
+    void getValue(int expected, Byte given) {
+        assertEquals(expected, given.getValue());
+    }
+    private static Stream<Arguments> getValueArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        0,
+                        new Byte(null, false)
+                ),
+                Arguments.of(
+                        0,
+                        Byte.ZEROS
+                ),
+                Arguments.of(
+                        255,
+                        Byte.ONES
+                ),
+                Arguments.of(
+                        88,
+                        new Byte(List.of(Bit.ZERO, Bit.ONE, Bit.ZERO, Bit.ONE, Bit.ONE), false)
+                ),
+                Arguments.of(
+                        224,
+                        new Byte(List.of(Bit.ONE, Bit.ONE, Bit.ONE), false)
+                ),
+                Arguments.of(
+                        7,
+                        new Byte(List.of(Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ONE), true)
+                ),
+                Arguments.of(
+                        1,
+                        new Byte(List.of(Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ONE), false)
+                )
+        );
+    }
+
+    @Test
+    public void shouldConstructorCreateNonEmptyObject() {
+        Byte b = Byte.ONES;
+        assertEquals(8, b.bits.size());
     }
 }

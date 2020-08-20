@@ -8,9 +8,6 @@ public class Byte {
 
     List<Bit> bits;
 
-    private Byte(List<Bit> bits) {
-        this.bits = bits;
-    }
     public Byte(List<Bit> bits, boolean repeating) {
         if (bits == null || bits.size() == 0) {
             bits = new ArrayList<>(List.of(Bit.ZERO));
@@ -28,7 +25,7 @@ public class Byte {
                 temp.add(Bit.ZERO);
             }
         }
-        new Byte(temp);
+        this.bits = temp;
     }
 
     protected List<Bit> checkNullBits(List<Bit> bits) {
@@ -62,5 +59,18 @@ public class Byte {
         return "Byte{" +
                 "bits=" + bits +
                 '}';
+    }
+
+    public int getValue() {
+        if (this.bits == null || this.bits.size() == 0) {
+            return 0;
+        }
+        int sum = 0;
+        int counterDescending = 7;
+        for (Bit b : this.bits) {
+            sum += b.getValue() * Math.pow(2, counterDescending);
+            counterDescending--;
+        }
+        return sum;
     }
 }
