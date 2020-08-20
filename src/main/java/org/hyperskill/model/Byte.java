@@ -1,60 +1,50 @@
 package org.hyperskill.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.ListIterator;
 
 public class Byte {
-    public static final Byte ZEROS = new Byte(List.of(Pair.ZERO_ZERO, Pair.ZERO_ZERO, Pair.ZERO_ZERO));
-    public static final Byte ONES = new Byte(List.of(Pair.ONE_ONE, Pair.ONE_ONE, Pair.ONE_ONE));
+    public static final Byte ZEROS = new Byte(List.of(Bit.ZERO), true);
+    public static final Byte ONES = new Byte(List.of(Bit.ONE), true);
 
-    List<Pair> pairs;
-    Pair parity;
+    List<Bit> bits;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Byte aByte = (Byte) o;
-        return Objects.equals(pairs, aByte.pairs) &&
-                Objects.equals(parity, aByte.parity);
+    private Byte(List<Bit> bits) {
+        this.bits = bits;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pairs, parity);
-    }
-
-    @Override
-    public String toString() {
-        return "Byte{" +
-                "pairs=" + pairs +
-                ", parity=" + parity +
-                '}';
-    }
-
-    public Byte(List<Pair> pairs) {
-        if (pairs == null) {
-            pairs = List.of(Pair.ZERO_ZERO, Pair.ZERO_ZERO, Pair.ZERO_ZERO);
+    public Byte(List<Bit> bits, boolean repeating) {
+        if (bits == null || bits.size() == 0) {
+            bits = new ArrayList<>(List.of(Bit.ZERO));
         }
-        List<Pair> temp = new ArrayList<>(pairs);
-        while (temp.size() < 3) {
-            temp.add(Pair.ZERO_ZERO);
+        if (bits.size() > 8) {
+            bits = bits.subList(0,8);
         }
-        this.pairs = temp;
-        this.parity = getParity();
-    }
+        bits = checkNullBits(bits);
 
-    protected Pair getParity() {
-        if (pairs == null || pairs.size() == 0) {
-            return Pair.ZERO_ZERO;
-        }
-        boolean result = false;
-        for (Pair p : pairs) {
-            if (p.getValue() == 1) {
-                result = !result;
+        List<Bit> temp = new ArrayList<>(bits);
+        while (temp.size() < 8) {
+            if (repeating) {
+                temp.add(temp.get(temp.size() - 1));
+            } else {
+                temp.add(Bit.ZERO);
             }
         }
-        return result ? Pair.ONE_ONE : Pair.ZERO_ZERO;
+        this.bits = temp;
     }
+
+    protected List<Bit> checkNullBits(List<Bit> bits) {
+        if (bits == null || bits.size() == 0) {
+            return Collections.emptyList();
+        }
+        for (ListIterator<Bit> it = bits.listIterator(); it.hasNext(); ) {
+            Bit b = it.next();
+            if (b == null) {
+                it.set(Bit.ZERO);
+            }
+        }
+        return bits;
+    }
+
 }
