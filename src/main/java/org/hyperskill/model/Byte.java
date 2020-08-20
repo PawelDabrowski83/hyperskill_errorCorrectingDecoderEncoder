@@ -1,9 +1,6 @@
 package org.hyperskill.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class Byte {
     public static final Byte ZEROS = new Byte(List.of(Bit.ZERO), true);
@@ -31,7 +28,7 @@ public class Byte {
                 temp.add(Bit.ZERO);
             }
         }
-        this.bits = temp;
+        new Byte(temp);
     }
 
     protected List<Bit> checkNullBits(List<Bit> bits) {
@@ -47,4 +44,23 @@ public class Byte {
         return bits;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Byte aByte = (Byte) o;
+        return Objects.equals(bits, aByte.bits);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bits);
+    }
+
+    @Override
+    public String toString() {
+        return "Byte{" +
+                "bits=" + bits +
+                '}';
+    }
 }

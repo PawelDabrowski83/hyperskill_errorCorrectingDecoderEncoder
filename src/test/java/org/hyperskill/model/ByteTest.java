@@ -41,4 +41,40 @@ public class ByteTest {
                 )
         );
     }
+
+    @DisplayName("should constructor create Byte object with exactly 8 bits")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}, repeat={2}")
+    @MethodSource("constructorArgumentsProvider")
+    void constructor(Byte expected, List<Bit> given, boolean repeat) {
+        assertEquals(expected, new Byte(given, repeat));
+    }
+    private static Stream<Arguments> constructorArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        Byte.ZEROS,
+                        List.of(Bit.ZERO),
+                        true
+                ),
+                Arguments.of(
+                        Byte.ZEROS,
+                        List.of(Bit.ZERO),
+                        false
+                ),
+                Arguments.of(
+                        Byte.ONES,
+                        List.of(Bit.ONE),
+                        true
+                ),
+                Arguments.of(
+                        new Byte(List.of(Bit.ONE, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO), false),
+                        List.of(Bit.ONE),
+                        false
+                ),
+                Arguments.of(
+                        new Byte(List.of(Bit.ONE, Bit.ZERO, Bit.ZERO, Bit.ONE, Bit.ONE, Bit.ZERO, Bit.ZERO, Bit.ZERO), false),
+                        List.of(Bit.ONE, Bit.ZERO, Bit.ZERO, Bit.ONE, Bit.ONE, Bit.ZERO),
+                        true
+                )
+        );
+    }
 }
