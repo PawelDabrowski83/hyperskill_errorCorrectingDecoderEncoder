@@ -4,11 +4,11 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
 
-public class ByteContainer {
+public class ContainerUtils {
 
     private final byte[] bytes;
 
-    public ByteContainer(byte[] bytes) {
+    public ContainerUtils(byte[] bytes) {
         if (bytes == null) {
             bytes = new byte[0];
         }
@@ -23,7 +23,7 @@ public class ByteContainer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ByteContainer that = (ByteContainer) o;
+        ContainerUtils that = (ContainerUtils) o;
         return Arrays.equals(bytes, that.bytes);
     }
 
@@ -39,11 +39,11 @@ public class ByteContainer {
                 '}';
     }
 
-    public static ByteContainer readFile(File file) throws IOException {
+    public static ContainerUtils readFile(File file) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Utils.copy(new FileInputStream(file), baos, 100000);
         byte[] bytes = baos.toByteArray();
-        return new ByteContainer(bytes);
+        return new ContainerUtils(bytes);
     }
 
     public void writeFile(File file) throws IOException {
@@ -51,7 +51,7 @@ public class ByteContainer {
         Utils.copy(bais, new FileOutputStream(file), 100000);
     }
 
-    public ByteContainer randomizeEveryByte(Random random) {
+    public ContainerUtils randomizeEveryByte(Random random) {
         byte[] buffer = new byte[getBytes().length];
         int counter = 0;
         for (byte b : getBytes()) {
@@ -61,7 +61,7 @@ public class ByteContainer {
             counter++;
         }
 
-        return new ByteContainer(buffer);
+        return new ContainerUtils(buffer);
     }
 
 }

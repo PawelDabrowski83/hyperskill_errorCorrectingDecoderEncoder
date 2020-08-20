@@ -4,16 +4,16 @@ import java.util.Arrays;
 
 public class ByteContainer {
 
-    private final ByteWithParity[] bytes;
+    OrderedByte[] bytes;
 
-    public ByteContainer(ByteWithParity[] bytes) {
+    public ByteContainer(OrderedByte[] bytes) {
         if (bytes == null) {
-            bytes = new ByteWithParity[0];
+            bytes = new Byte[0];
         }
         this.bytes = bytes;
     }
 
-    public ByteWithParity[] getBytes() {
+    public OrderedByte[] getBytes() {
         return bytes;
     }
 

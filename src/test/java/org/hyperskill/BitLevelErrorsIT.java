@@ -19,7 +19,7 @@ public class BitLevelErrorsIT {
 
         createTestFile(filename, content);
         logger.info("create file with name: " + filename + " and content: " + content);
-        ByteContainer container = readFile(filename);
+        ContainerUtils container = readFile(filename);
         logger.info("read file with name: " + filename);
         container.randomizeEveryByte(random);
         logger.info("bits randomized");
@@ -40,7 +40,7 @@ public class BitLevelErrorsIT {
         final File file = new File(filename);
         byte[] source = content.getBytes();
         logger.info("bytes for test file: " + content);
-        ByteContainer container = new ByteContainer(source);
+        ContainerUtils container = new ContainerUtils(source);
         try {
             container.writeFile(file);
             logger.info("Test file created.");
@@ -50,11 +50,11 @@ public class BitLevelErrorsIT {
         }
     }
 
-    private static ByteContainer readFile(String filename) {
+    private static ContainerUtils readFile(String filename) {
         final File file = new File(filename);
-        ByteContainer container = new ByteContainer(new byte[0]);
+        ContainerUtils container = new ContainerUtils(new byte[0]);
         try {
-            container = ByteContainer.readFile(file);
+            container = ContainerUtils.readFile(file);
             logger.info("read file: " + file.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();

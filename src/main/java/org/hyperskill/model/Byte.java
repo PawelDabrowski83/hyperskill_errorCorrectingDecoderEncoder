@@ -1,8 +1,10 @@
 package org.hyperskill.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
-public class Byte {
+public class Byte implements OrderedByte{
     public static final Byte ZEROS = new Byte(List.of(Bit.ZERO), true);
     public static final Byte ONES = new Byte(List.of(Bit.ONE), true);
 
@@ -72,5 +74,10 @@ public class Byte {
             counterDescending--;
         }
         return sum;
+    }
+
+    @Override
+    public int compareTo(@NotNull OrderedByte o) {
+        return Integer.compare(this.getValue(), o.getValue());
     }
 }

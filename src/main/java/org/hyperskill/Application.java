@@ -9,11 +9,11 @@ public class Application {
     private static final String SENT_FILE = "send.txt";
     private static final String ENCODED_FILE = "encoded.txt";
     private static final String DECODED_FILE = "decoded.txt";
-    private ByteContainer byteContainer;
+    private ContainerUtils containerUtils;
 
     public void encode() {
         try {
-            byteContainer = ByteContainer.readFile(new File(RECEIVED_FILE));
+            containerUtils = ContainerUtils.readFile(new File(RECEIVED_FILE));
         } catch (IOException e) {
             e.printStackTrace();
         }

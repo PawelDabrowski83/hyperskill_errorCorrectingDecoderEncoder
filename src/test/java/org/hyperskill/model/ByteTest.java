@@ -123,4 +123,35 @@ public class ByteTest {
         Byte b = Byte.ONES;
         assertEquals(8, b.bits.size());
     }
+
+    @DisplayName("should compareTo allow comparing between different implementations of OrderedBytes")
+    @ParameterizedTest(name = "{index} => expected={0}, byte1={1}, byte2={2}")
+    @MethodSource("compareToArgumentsProvider")
+    void compareTo(int expected, OrderedByte o1, OrderedByte o2) {
+        assertEquals(expected, o1.compareTo(o2));
+    }
+    private static Stream<Arguments> compareToArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        0,
+                        Byte.ZEROS,
+                        ByteWithParity.ZEROS
+                ),
+                Arguments.of(
+                        1,
+                        new Byte(List.of(Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ZERO, Bit.ONE), false),
+                        ByteWithParity.ZEROS
+                ),
+                Arguments.of(
+                        1,
+                        new Byte(List.of(Bit.ONE), true),
+                        ByteWithParity.ZEROS
+                ),
+                Arguments.of(
+                        -1,
+                        Byte.ZEROS,
+                        new ByteWithParity(List.of(Pair.ZERO_ZERO, Pair.ZERO_ZERO, Pair.ZERO_ONE))
+                )
+        );
+    }
 }

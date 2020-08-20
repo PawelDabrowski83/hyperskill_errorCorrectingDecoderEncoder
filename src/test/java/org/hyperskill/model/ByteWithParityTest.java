@@ -90,4 +90,39 @@ public class ByteWithParityTest {
                 )
         );
     }
+
+    @DisplayName("should getValue return int value of descripted byte")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("getValueArgumentsProvider")
+    void getValue(int expected, ByteWithParity given) {
+        assertEquals(expected, given.getValue());
+    }
+    private static Stream<Arguments> getValueArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        0,
+                        ByteWithParity.ZEROS
+                ),
+                Arguments.of(
+                        255,
+                        ByteWithParity.ONES
+                ),
+                Arguments.of(
+                        0,
+                        new ByteWithParity(null)
+                ),
+                Arguments.of(
+                        224,
+                        new ByteWithParity(List.of(Pair.ONE_ONE, Pair.ONE_ZERO, Pair.ZERO_ZERO))
+                ),
+                Arguments.of(
+                        91,
+                        new ByteWithParity(List.of(Pair.ZERO_ONE, Pair.ZERO_ONE, Pair.ONE_ZERO))
+                ),
+                Arguments.of(
+                        7,
+                        new ByteWithParity(List.of(Pair.ZERO_ZERO, Pair.ZERO_ZERO, Pair.ZERO_ONE))
+                )
+        );
+    }
 }

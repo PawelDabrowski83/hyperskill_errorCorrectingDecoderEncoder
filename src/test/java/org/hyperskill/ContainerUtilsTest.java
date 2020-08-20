@@ -15,13 +15,13 @@ import java.util.stream.Stream;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-public class ByteContainerTest {
+public class ContainerUtilsTest {
 
     @DisplayName("should getBytes() work")
     @ParameterizedTest(name = "{index} => actual={0}")
     @CsvFileSource(resources = "/test.csv")
     void getBytes(String actual) {
-        ByteContainer container = new ByteContainer(actual.getBytes());
+        ContainerUtils container = new ContainerUtils(actual.getBytes());
         assertEquals(Arrays.toString("test".getBytes()), Arrays.toString(container.getBytes()));
     }
 
@@ -32,7 +32,7 @@ public class ByteContainerTest {
         String filePath = "src/test/resources/test.csv";
         File file = new File(filePath);
         try {
-            assertArrayEquals(actual.getBytes(), ByteContainer.readFile(file).getBytes());
+            assertArrayEquals(actual.getBytes(), ContainerUtils.readFile(file).getBytes());
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("File not found");
@@ -47,27 +47,27 @@ public class ByteContainerTest {
     @DisplayName("should randomizeEveryByte() invert random bit in given byte array")
     @ParameterizedTest(name = "{index} => expected={0}, seed={1}, given={2}")
     @MethodSource("randomizeEveryByteArgumentsProvider")
-    void randomizeEveryByte(ByteContainer expected, int seed, ByteContainer given) {
+    void randomizeEveryByte(ContainerUtils expected, int seed, ContainerUtils given) {
         Random random = new Random(seed);
         assertArrayEquals(expected.getBytes(), given.randomizeEveryByte(random).getBytes());
     }
     private static Stream<Arguments> randomizeEveryByteArgumentsProvider() {
         return Stream.of(
                 Arguments.of(
-                        new ByteContainer(new byte[]{
+                        new ContainerUtils(new byte[]{
                                 0b01110000, 0b00100101, 0b01110111, 0b01111100
                         }),
                         0,
-                        new ByteContainer(new byte[]{
+                        new ContainerUtils(new byte[]{
                                 't', 'e', 's', 't'
                         })
                 ),
                 Arguments.of(
-                        new ByteContainer(new byte[]{
+                        new ContainerUtils(new byte[]{
                                 0b01110000, 0b01110101, 0b00110011, 0b01010100
                         }),
                         1,
-                        new ByteContainer(new byte[]{
+                        new ContainerUtils(new byte[]{
                                 't', 'e', 's', 't'
                         })
                 )
@@ -77,12 +77,12 @@ public class ByteContainerTest {
     @DisplayName("should writeFile() saves object to file with given name")
     @ParameterizedTest(name = "{index} => expected={0}, filepath={1}, source={2}")
     @MethodSource("writeFileArgumentsProvider")
-    void writeFile(byte[] expected, String filepath, ByteContainer source) {
+    void writeFile(byte[] expected, String filepath, ContainerUtils source) {
         File file = new File(filepath);
-        ByteContainer actual = new ByteContainer(new byte[0]);
+        ContainerUtils actual = new ContainerUtils(new byte[0]);
         try {
             source.writeFile(file);
-            actual = ByteContainer.readFile(file);
+            actual = ContainerUtils.readFile(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,7 +93,7 @@ public class ByteContainerTest {
                 Arguments.of(
                         new byte[]{'t', 'e', 's', 't'},
                         "src/test/resources/written.txt",
-                        new ByteContainer(new byte[]{'t', 'e', 's', 't'})
+                        new ContainerUtils(new byte[]{'t', 'e', 's', 't'})
                 )
         );
     }

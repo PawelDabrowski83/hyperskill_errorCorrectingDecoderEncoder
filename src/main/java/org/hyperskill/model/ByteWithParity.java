@@ -1,10 +1,13 @@
 package org.hyperskill.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public class ByteWithParity {
+public class ByteWithParity implements OrderedByte{
     public static final ByteWithParity ZEROS = new ByteWithParity(List.of(Pair.ZERO_ZERO, Pair.ZERO_ZERO, Pair.ZERO_ZERO));
     public static final ByteWithParity ONES = new ByteWithParity(List.of(Pair.ONE_ONE, Pair.ONE_ONE, Pair.ONE_ONE));
 
@@ -56,5 +59,28 @@ public class ByteWithParity {
             }
         }
         return result ? Pair.ONE_ONE : Pair.ZERO_ZERO;
+    }
+
+    @Override
+    public int getValue() {
+        if (this.pairs == null || this.pairs.size() == 0) {
+            return 0;
+        }
+        int descendingCounter = 7;
+        int sum = 0;
+        List<Pair> temp = new LinkedList<>(pairs);
+        temp.add(parity);
+        for (Pair p : temp) {
+            for (Bit b : p.pair) {
+                sum += b.getValue() * Math.pow(2, descendingCounter);
+                descendingCounter--;
+            }
+        }
+        return sum;
+    }
+
+    @Override
+    public int compareTo(@NotNull OrderedByte o) {
+        return Integer.compare(this.getValue(), o.getValue());
     }
 }
