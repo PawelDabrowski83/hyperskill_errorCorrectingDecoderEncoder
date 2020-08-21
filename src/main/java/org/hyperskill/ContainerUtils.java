@@ -105,5 +105,23 @@ public class ContainerUtils {
         return String.valueOf(result);
     }
 
+    protected String doubleChars(String given) {
+        if (given == null || given.isEmpty()) {
+            return "";
+        }
+        char[] source = given.toCharArray();
+        char[] temp = new char[source.length * 2];
+        int counterFrom = 0;
+        int counterTo = 0;
+        for (char c : source) {
+            temp[counterTo] = source[counterFrom];
+            counterTo++;
+            temp[counterTo] = source[counterFrom];
+            counterFrom++;
+            counterTo++;
+        }
+        return String.valueOf(temp);
+    }
+
 
 }

@@ -190,4 +190,32 @@ public class ContainerUtilsTest {
                 Arguments.of("", "")
         );
     }
+
+    @DisplayName("should doubleChars() return string with doubled chars")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("doubleCharsArgumentsProvider")
+    void doubleChars(String expected, String given) {
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.doubleChars(given));
+    }
+    private static Stream<Arguments> doubleCharsArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "00110011",
+                        "0101"
+                ),
+                Arguments.of(
+                        "00000000",
+                        "0000"
+                ),
+                Arguments.of(
+                        "00110011",
+                        "0101"
+                ),
+                Arguments.of(
+                        "",
+                        ""
+                )
+        );
+    }
 }
