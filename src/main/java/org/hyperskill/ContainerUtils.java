@@ -85,11 +85,24 @@ public class ContainerUtils {
 
     /**
      * appends parity bit at the end of given string
-     * @param bites string with bits
+     * @param bits string with bits
      * @return string with bits, parity attached at the end
      */
-    protected String addParity(String bites) {
-        return "";
+    protected String addParity(String bits) {
+        if (bits == null || bits.isEmpty()) {
+            return "";
+        }
+        boolean isOne = false;
+        for (char c : bits.toCharArray()) {
+            if (c == '1') {
+                isOne = !isOne;
+            }
+        }
+        char parity = isOne ? '1' : '0';
+        char[] result = Arrays.copyOf(bits.toCharArray(), bits.toCharArray().length + 1);
+        result[bits.toCharArray().length] = parity;
+
+        return String.valueOf(result);
     }
 
 
