@@ -97,4 +97,44 @@ public class ContainerUtilsTest {
                 )
         );
     }
+
+    @DisplayName("should toString produce clear byte strings without any other characters separated by spaces")
+    @ParameterizedTest(name = "{index} => expected ={0}, given={1}")
+    @MethodSource("toStringArgumentsProvider")
+    void toString(String expected, byte[] bytes) {
+        ContainerUtils containerUtils = new ContainerUtils(bytes);
+        assertEquals(expected, containerUtils.toString());
+    }
+    private static Stream<Arguments> toStringArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "0000000000000000",
+                        new byte[]{0, 0}
+                ),
+                Arguments.of(
+                        "",
+                        new byte[0]
+                ),
+                Arguments.of(
+                        "00000001",
+                        new byte[]{1}
+                ),
+                Arguments.of(
+                        "00000111",
+                        new byte[]{7}
+                ),
+                Arguments.of(
+                        "11110110",
+                        new byte[]{(byte) -10}
+                ),
+                Arguments.of(
+                        "11111111",
+                        new byte[]{(byte) 255}
+                ),
+                Arguments.of(
+                        "000001110001000111111101",
+                        new byte[]{(byte) 7, (byte) 17, (byte) -3}
+                )
+        );
+    }
 }

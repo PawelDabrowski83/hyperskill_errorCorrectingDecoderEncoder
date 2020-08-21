@@ -34,9 +34,21 @@ public class ContainerUtils {
 
     @Override
     public String toString() {
-        return "ByteContainer{" +
-                "bytes=" + Arrays.toString(bytes) +
-                '}';
+        if (bytes.length == 0) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (byte b : bytes) {
+            StringBuilder subBuilder = new StringBuilder(Integer.toBinaryString(b));
+            if (subBuilder.length() > 8) {
+                subBuilder = new StringBuilder(subBuilder.subSequence(subBuilder.length() - 8, subBuilder.length()));
+            }
+            while (subBuilder.length() < 8) {
+                subBuilder.insert(0, "0");
+            }
+            builder.append(subBuilder.toString());
+        }
+        return builder.toString();
     }
 
     public static ContainerUtils readFile(File file) throws IOException {
@@ -63,5 +75,6 @@ public class ContainerUtils {
 
         return new ContainerUtils(buffer);
     }
+
 
 }
