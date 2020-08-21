@@ -75,12 +75,29 @@ public class ContainerUtils {
         return new ContainerUtils(buffer);
     }
 
-    public ContainerUtils encode(String message) {
+    public String encode(String message) {
         if (message == null || message.length() == 0) {
-            return new ContainerUtils(new byte[0]);
+            return "";
         }
-
-        return new ContainerUtils(new byte[0]);
+        StringBuilder source = new StringBuilder(message);
+        StringBuilder target = new StringBuilder();
+        while(source.length() > 3) {
+            String section = source.substring(0,3);
+            source.delete(0, 3);
+            section = addParity(section);
+            section = doubleChars(section);
+            target.append(section);
+        }
+        if (source.length() > 0) {
+            while (source.length() < 3) {
+                source.insert(source.length() - 1, "0");
+            }
+            String section = source.toString();
+            section = addParity(section);
+            section = doubleChars(section);
+            target.append(section);
+        }
+        return target.toString();
     }
 
     /**
@@ -101,7 +118,6 @@ public class ContainerUtils {
         char parity = isOne ? '1' : '0';
         char[] result = Arrays.copyOf(bits.toCharArray(), bits.toCharArray().length + 1);
         result[bits.toCharArray().length] = parity;
-
         return String.valueOf(result);
     }
 

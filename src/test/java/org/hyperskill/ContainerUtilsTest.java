@@ -143,7 +143,7 @@ public class ContainerUtilsTest {
     @MethodSource("encodeArgumentsProvider")
     void encode(String expected, String given) {
         ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
-        assertEquals(expected, containerUtils.encode(given).toString());
+        assertEquals(expected, containerUtils.encode(given));
     }
     private static Stream<Arguments> encodeArgumentsProvider() {
         return Stream.of(
@@ -160,12 +160,16 @@ public class ContainerUtilsTest {
                         "00000110"
                 ),
                 Arguments.of(
-                        "111100000000000011110000001111000000111111000011",
+                        "111100000000000011110000001111000000111100001111",
                         "1100001100110011"
                 ),
                 Arguments.of(
-                        "1111000000001111111111110000000011000000000000001100110011000011",
+                        "1111000000001111111111110000000011000011000000001100110011000011",
                         "110001111000100000101100"
+                ),
+                Arguments.of(
+                        "000011110011110000000000",
+                        "00101100"
                 )
         );
     }
