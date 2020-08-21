@@ -72,8 +72,24 @@ public class ContainerUtils {
             buffer[counter] = (byte) emulator.invertBit(randomPosition).getContent();
             counter++;
         }
-
         return new ContainerUtils(buffer);
+    }
+
+    public ContainerUtils encode(String message) {
+        if (message == null || message.length() == 0) {
+            return new ContainerUtils(new byte[0]);
+        }
+
+        return new ContainerUtils(new byte[0]);
+    }
+
+    /**
+     * appends parity bit at the end of given string
+     * @param bites string with bits
+     * @return string with bits, parity attached at the end
+     */
+    protected String addParity(String bites) {
+        return "";
     }
 
 

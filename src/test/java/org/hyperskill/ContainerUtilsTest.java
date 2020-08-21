@@ -137,4 +137,57 @@ public class ContainerUtilsTest {
                 )
         );
     }
+
+    @DisplayName("should encode() duplicate each bit in byte-string and adds parity byte each 3 bits")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("encodeArgumentsProvider")
+    void encode(String expected, String given) {
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.encode(given).toString());
+    }
+    private static Stream<Arguments> encodeArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "111100001100110000000000",
+                        "11010100"
+                ),
+                Arguments.of(
+                        "",
+                        ""
+                ),
+                Arguments.of(
+                        "000000000000111111000011",
+                        "00000110"
+                ),
+                Arguments.of(
+                        "111100000000000011110000001111000000111111000011",
+                        "1100001100110011"
+                ),
+                Arguments.of(
+                        "1111000000001111111111110000000011000000000000001100110011000011",
+                        "110001111000100000101100"
+                )
+        );
+    }
+
+    @DisplayName("should addParity() adds parity bit as string")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("addParityArgumentsProvider")
+    void addParity(String expected, String given) {
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.addParity(given));
+    }
+    private static Stream<Arguments> addParityArgumentsProvider() {
+        return Stream.of(
+                Arguments.of("0000", "000"),
+                Arguments.of("0011", "001"),
+                Arguments.of("0101", "010"),
+                Arguments.of("0110", "011"),
+                Arguments.of("1001", "100"),
+                Arguments.of("1010", "101"),
+                Arguments.of("1100", "110"),
+                Arguments.of("1111", "111"),
+                Arguments.of("", "")
+        );
+    }
 }

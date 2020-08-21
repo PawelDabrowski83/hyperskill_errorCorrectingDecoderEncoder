@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public class BitLevelCorrection {
 
     protected static final Pattern BIT_PATTERN = Pattern.compile("([01]{2})");
+    protected static final Pattern BYTE_PATTERN = Pattern.compile("([01]{8})");
 
     public static boolean isParityCorrect(int binary) {
         String byteString = convertTo8bit(binary);
