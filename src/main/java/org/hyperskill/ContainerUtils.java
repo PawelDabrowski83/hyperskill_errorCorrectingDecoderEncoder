@@ -139,5 +139,32 @@ public class ContainerUtils {
         return String.valueOf(temp);
     }
 
+    /**
+     * send simulates transmition errors, changes random bit in every byte. bytes are represented by strings
+     * @param message string representing byte message
+     * @param random for testing with determined seed
+     * @return string as byte message with transmition errors
+     */
+    public String send(String message, Random random) {
+        if (random == null) {
+            random = new Random();
+        }
+        if (message == null || message.isEmpty()) {
+            return "";
+        }
+        return "";
+    }
+
+    public String invertBit(String message, Random random) {
+        if (message.isEmpty()) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder(message);
+        int randomPosition = Utils.getRandomPosition(8, random);
+        char inverted = builder.charAt(randomPosition) == '1' ? '0' : '1';
+        builder.setCharAt(randomPosition, inverted);
+        return builder.toString();
+    }
+
 
 }

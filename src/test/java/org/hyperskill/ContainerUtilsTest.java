@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -170,6 +171,10 @@ public class ContainerUtilsTest {
                 Arguments.of(
                         "000011110011110000000000",
                         "00101100"
+                ),
+                Arguments.of(
+                        "1111000000111100",
+                        "110011"
                 )
         );
     }
@@ -219,6 +224,34 @@ public class ContainerUtilsTest {
                 Arguments.of(
                         "",
                         ""
+                )
+        );
+    }
+
+    @DisplayName("should invertBit() switch one bit determined randomly")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}, seed={2}")
+    @MethodSource("invertBitArgumentsProvider")
+    void invertBit(String expected, String given, int seed) {
+        Random random = new Random(seed);
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.invertBit(given, random));
+    }
+    private static Stream<Arguments> invertBitArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "00000100",
+                        "00000000",
+                        0
+                ),
+                Arguments.of(
+                        "10101010",
+                        "10101110",
+                        0
+                ),
+                Arguments.of(
+                        "",
+                        "",
+                        0
                 )
         );
     }
