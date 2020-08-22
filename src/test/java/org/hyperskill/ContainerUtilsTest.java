@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
 
 public class ContainerUtilsTest {
 
+
+
     @DisplayName("should getBytes() work")
     @ParameterizedTest(name = "{index} => actual={0}")
     @CsvFileSource(resources = "/test.csv")
@@ -251,6 +253,39 @@ public class ContainerUtilsTest {
                 Arguments.of(
                         "",
                         "",
+                        0
+                )
+        );
+    }
+
+    @DisplayName("should send simulate transmition errors with every byte by inverting random bit")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}, seed={2}")
+    @MethodSource("sendArgumentsProvider")
+    void send(String expected, String given, int seed) {
+        Random random = new Random(seed);
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.send(given, random));
+    }
+    private static Stream<Arguments> sendArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "00110111",
+                        "00110011",
+                        0
+                ),
+                Arguments.of(
+                        "11110100111010100000101111000100",
+                        "11110000101010100000111111001100",
+                        0
+                ),
+                Arguments.of(
+                        "",
+                        "",
+                        0
+                ),
+                Arguments.of(
+                        "",
+                        "1010",
                         0
                 )
         );

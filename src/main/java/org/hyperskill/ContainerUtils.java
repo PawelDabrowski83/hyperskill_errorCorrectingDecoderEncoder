@@ -3,8 +3,11 @@ package org.hyperskill;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ContainerUtils {
+    public static final Pattern BYTE_PATTERN = Pattern.compile("([01]{8})");
 
     private final byte[] bytes;
 
@@ -149,10 +152,15 @@ public class ContainerUtils {
         if (random == null) {
             random = new Random();
         }
-        if (message == null || message.isEmpty()) {
+        if (message == null || message.isEmpty() || message.length() % 8 != 0) {
             return "";
         }
-        return "";
+        Matcher matcher = BYTE_PATTERN.matcher(message);
+        StringBuilder target = new StringBuilder();
+        while (matcher.find()) {
+            target.append(invertBit(matcher.group(), random));
+        }
+        return target.toString();
     }
 
     public String invertBit(String message, Random random) {
