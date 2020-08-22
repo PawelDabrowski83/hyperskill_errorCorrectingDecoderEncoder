@@ -174,5 +174,9 @@ public class ContainerUtils {
         return builder.toString();
     }
 
+    public String decode(String message) {
+        return "";
+    }
+
 
 }

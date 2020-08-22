@@ -290,4 +290,52 @@ public class ContainerUtilsTest {
                 )
         );
     }
+
+    @DisplayName("should decode() revert encoded message that may contain some transmition errors")
+    @ParameterizedTest(name = "{index} => expected={0}, source={1}")
+    @MethodSource("decodeArgumentsProvider")
+    void decode(String expected, String source) {
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.decode(source));
+    }
+    private static Stream<Arguments> decodeArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "101",
+                        "11001101"
+                ),
+                Arguments.of(
+                        "",
+                        ""
+                ),
+                Arguments.of(
+                        "1100100011011111",
+                        "111100000111001100001111110010001111111111000011"
+                ),
+                Arguments.of(
+                        "1101010011010000",
+                        "111100001100111000001111110011000000000000000000"
+                ),
+                Arguments.of(
+                        "10101111",
+                        "110011000011110011110000"
+                ),
+                Arguments.of(
+                        "00110110",
+                        "000011111100110011000011"
+                ),
+                Arguments.of(
+                        "1101010011010000",
+                        "110100001100111000001011110011000000000010000000"
+                ),
+                Arguments.of(
+                        "10101111",
+                        "111011000011110011111000"
+                ),
+                Arguments.of(
+                        "00110110",
+                        "000011111000110011000111"
+                )
+        );
+    }
 }
