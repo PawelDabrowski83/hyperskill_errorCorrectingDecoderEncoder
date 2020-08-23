@@ -45,8 +45,8 @@ public class UtilsTest {
                         ""
                 ),
                 Arguments.of(
-                        new byte[]{116, 101, 115, 116},
-                        "test"
+                        new byte[]{40, 77},
+                        "0010100001001101"
                 )
         );
     }

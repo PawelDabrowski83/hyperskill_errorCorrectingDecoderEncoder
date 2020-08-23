@@ -28,11 +28,25 @@ public class Utils {
         output.flush();
     }
 
-    public static byte[] getByteArrayFromString(String given) {
-        byte[] target = new byte[given.toCharArray().length];
+    public static byte[] getByteArrayFromString(String binary) {
+        if (binary == null || binary.isEmpty() || binary.length() % 8 != 0) {
+            return new byte[0];
+        }
+        int bytes = binary.length() / 8;
+        byte[] target = new byte[bytes];
         int counter = 0;
-        for (byte ignored : target) {
-            target[counter] = (byte) given.charAt(counter);
+        StringBuilder source = new StringBuilder(binary);
+
+        while (source.length() > 0) {
+            String substring = source.substring(0, 8);
+            source.delete(0, 8);
+            byte selectedByte = 0;
+            try {
+                selectedByte = Byte.valueOf(substring, 2);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            target[counter] = selectedByte;
             counter++;
         }
         return target;
