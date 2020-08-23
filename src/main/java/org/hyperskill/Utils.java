@@ -27,4 +27,14 @@ public class Utils {
         }
         output.flush();
     }
+
+    public static byte[] getByteArrayFromString(String given) {
+        byte[] target = new byte[given.toCharArray().length];
+        int counter = 0;
+        for (byte ignored : target) {
+            target[counter] = (byte) given.charAt(counter);
+            counter++;
+        }
+        return target;
+    }
 }

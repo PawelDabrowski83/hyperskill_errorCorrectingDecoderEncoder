@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class UtilsTest {
@@ -28,6 +29,25 @@ public class UtilsTest {
                 Arguments.of(-1, 0, Integer.MIN_VALUE),
                 Arguments.of(62, Integer.MAX_VALUE, 100),
                 Arguments.of(1331656284, Integer.MAX_VALUE, Integer.MAX_VALUE)
+        );
+    }
+
+    @DisplayName("should getByteArrayFromString() work")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("getByteArrayFromStringArgumentsProvider")
+    void getByteArrayFromString(byte[] expected, String given) {
+        assertArrayEquals(expected, Utils.getByteArrayFromString(given));
+    }
+    private static Stream<Arguments> getByteArrayFromStringArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        new byte[0],
+                        ""
+                ),
+                Arguments.of(
+                        new byte[]{116, 101, 115, 116},
+                        "test"
+                )
         );
     }
 

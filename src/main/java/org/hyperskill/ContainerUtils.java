@@ -132,7 +132,7 @@ public class ContainerUtils {
         char[] temp = new char[source.length * 2];
         int counterFrom = 0;
         int counterTo = 0;
-        for (char c : source) {
+        for (char ignored : source) {
             temp[counterTo] = source[counterFrom];
             counterTo++;
             temp[counterTo] = source[counterFrom];
