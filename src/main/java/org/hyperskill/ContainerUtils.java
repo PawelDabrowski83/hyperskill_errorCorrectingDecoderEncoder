@@ -174,6 +174,11 @@ public class ContainerUtils {
         return builder.toString();
     }
 
+    /**
+     * Decode encrypted message, which may contain one random bit error in each byte
+     * @param message encoded message
+     * @return decoded message as string
+     */
     public String decode(String message) {
         if (message == null || message.isEmpty()) {
             return "";
@@ -185,8 +190,9 @@ public class ContainerUtils {
             source.delete(0, 8);
             target.append(decodeByte(substring));
         }
-        if (source.length() > 0) {
-            target.append(decodeByte(source.toString()));
+        int bitOverlap = target.length() % 8;
+        if (bitOverlap > 0 && target.length() > 8) {
+            target.delete(target.length() - bitOverlap, target.length());
         }
         return target.toString();
     }
