@@ -371,6 +371,10 @@ public class ContainerUtilsTest {
                 Arguments.of(
                         "010",
                         "00110010"
+                ),
+                Arguments.of(
+                        "011",
+                        "00111100"
                 )
         );
     }

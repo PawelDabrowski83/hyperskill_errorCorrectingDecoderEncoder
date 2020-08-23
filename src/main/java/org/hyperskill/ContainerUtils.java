@@ -181,9 +181,14 @@ public class ContainerUtils {
         StringBuilder source = new StringBuilder(message);
         StringBuilder target = new StringBuilder();
         while (source.length() >= 8) {
-
+            String substring = source.substring(0,8);
+            source.delete(0, 8);
+            target.append(decodeByte(substring));
         }
-        return "";
+        if (source.length() > 0) {
+            target.append(decodeByte(source.toString()));
+        }
+        return target.toString();
     }
 
     /**
@@ -209,6 +214,10 @@ public class ContainerUtils {
         if (target.substring(0,4).contains("?")) {
             target = new StringBuilder(decodeByteWithParity(target.toString()));
         }
+        while (target.length() > 3) {
+            target.deleteCharAt(target.length() - 1);
+        }
+
         return target.toString();
     }
 
