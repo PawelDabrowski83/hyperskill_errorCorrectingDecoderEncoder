@@ -186,8 +186,13 @@ public class ContainerUtils {
         return "";
     }
 
+    /**
+     * Reduce parity bits from encoded message, allows one transmission error for each byte
+     * @param given string representation of encoded byte
+     * @return 3 bits of information
+     */
     protected String decodeByte(String given) {
-        if (given == null || given.length() % 8 != 0) {
+        if (given == null || given.length() % 8 != 0 || given.isEmpty()) {
             return "";
         }
         StringBuilder source = new StringBuilder(given);
@@ -201,12 +206,17 @@ public class ContainerUtils {
                 target.append("?");
             }
         }
-        if (target.substring(0,3).contains("?")) {
-
+        if (target.substring(0,4).contains("?")) {
+            target = new StringBuilder(decodeByteWithParity(target.toString()));
         }
-        return "";
+        return target.toString();
     }
 
+    /**
+     * returns 3 bits of decoded message
+     * @param given string containg bits (after reducing parity, unknown bits represented by ?)
+     * @return 3 bits of decoded message or empty
+     */
     protected String decodeByteWithParity(String given) {
         if (given == null || given.length() != 4) {
             return "";
