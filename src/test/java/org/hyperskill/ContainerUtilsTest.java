@@ -338,4 +338,80 @@ public class ContainerUtilsTest {
                 )
         );
     }
+
+    @DisplayName("should decodeByte() decrypt encoded message")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("decodeByteArgumentsProvider")
+    void decodeByte(String expected, String given) {
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.decodeByte(given));
+    }
+    private static Stream<Arguments> decodeByteArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "",
+                        ""
+                ),
+                Arguments.of(
+                        "101",
+                        "11001000"
+                ),
+                Arguments.of(
+                        "010",
+                        "00111011"
+                ),
+                Arguments.of(
+                        "000",
+                        "00010000"
+                ),
+                Arguments.of(
+                        "110",
+                        "01110000"
+                ),
+                Arguments.of(
+                        "010",
+                        "00110010"
+                )
+        );
+    }
+
+    @DisplayName("should decodeByteWithParity() return 3 bits of decoded message or empty if decoding failed")
+    @ParameterizedTest(name = "{index} => expected={0}, given={1}")
+    @MethodSource("decodeByteWithParityArgumentsProvider")
+    void decodeByteWithParity(String expected, String given) {
+        ContainerUtils containerUtils = new ContainerUtils(new byte[0]);
+        assertEquals(expected, containerUtils.decodeByteWithParity(given));
+    }
+    private static Stream<Arguments> decodeByteWithParityArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "",
+                        ""
+                ),
+                Arguments.of(
+                        "000",
+                        "?000"
+                ),
+                Arguments.of(
+                        "100",
+                        "1?01"
+                ),
+                Arguments.of(
+                        "111",
+                        "?111"
+                ),
+                Arguments.of(
+                        "101",
+                        "101?"
+                ),
+                Arguments.of(
+                        "011",
+                        "0?10"
+                ),
+                Arguments.of(
+                        "110",
+                        "11?0"
+                )
+        );
+    }
 }

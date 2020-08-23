@@ -175,7 +175,56 @@ public class ContainerUtils {
     }
 
     public String decode(String message) {
+        if (message == null || message.isEmpty()) {
+            return "";
+        }
+        StringBuilder source = new StringBuilder(message);
+        StringBuilder target = new StringBuilder();
+        while (source.length() >= 8) {
+
+        }
         return "";
+    }
+
+    protected String decodeByte(String given) {
+        if (given == null || given.length() % 8 != 0) {
+            return "";
+        }
+        StringBuilder source = new StringBuilder(given);
+        StringBuilder target = new StringBuilder();
+        while (source.length() > 0) {
+            String pair = source.substring(0, 2);
+            source.delete(0, 2);
+            if (pair.charAt(0) == pair.charAt(1)) {
+                target.append(pair.charAt(0));
+            } else {
+                target.append("?");
+            }
+        }
+        if (target.substring(0,3).contains("?")) {
+
+        }
+        return "";
+    }
+
+    protected String decodeByteWithParity(String given) {
+        if (given == null || given.length() != 4) {
+            return "";
+        }
+        if (given.charAt(3) == '?') {
+            return given.substring(0, 3);
+        }
+        boolean parityActual = false;
+        String result = given.substring(0, 3);
+        for (char c : result.toCharArray()) {
+            if (c == '1') {
+                parityActual = !parityActual;
+            }
+        }
+        boolean parityExpected = given.charAt(3) == '1';
+        return parityExpected == parityActual ?
+                result.replaceAll("\\?", "0") :
+                result.replaceAll("\\?", "1");
     }
 
 
