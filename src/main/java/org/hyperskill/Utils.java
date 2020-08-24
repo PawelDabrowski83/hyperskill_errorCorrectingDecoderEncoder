@@ -42,7 +42,7 @@ public class Utils {
             source.delete(0, 8);
             byte selectedByte = 0;
             try {
-                selectedByte = Byte.valueOf(substring, 2);
+                selectedByte = (byte) Integer.parseInt(substring, 2);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
