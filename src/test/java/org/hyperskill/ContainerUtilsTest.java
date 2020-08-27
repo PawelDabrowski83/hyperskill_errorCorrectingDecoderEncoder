@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -137,6 +136,10 @@ public class ContainerUtilsTest {
                 Arguments.of(
                         "000001110001000111111101",
                         new byte[]{(byte) 7, (byte) 17, (byte) -3}
+                ),
+                Arguments.of(
+                        "00100100011011110110110101100101001000000111001001100001011011100110010000110000011011010010000001101101011001010111001101110011010000010110011101100101",
+                        new byte[]{36, 111, 109, 101, 32, 114, 97, 110, 100, 48, 109, 32, 109, 101, 115, 115, 65, 103, 101}
                 )
         );
     }
@@ -177,6 +180,10 @@ public class ContainerUtilsTest {
                 Arguments.of(
                         "1111000000111100",
                         "110011"
+                ),
+                Arguments.of(
+                        "000011110000111100000000111100001111111111001100110011001100110000111100000011110011001100110011000000000000111111110000001100110011110000000000001100111111000011111111000011111100001111000011000011111100001100000000111100001111000011000011110000110000000000111100001111000011001111110000001100111100110011110000001111000011110011000011111100001100001100000000110011001100001111111111001111000000111100001111",
+                        "00100100011011110110110101100101001000000111001001100001011011100110010000110000011011010010000001101101011001010111001101110011010000010110011101100101"
                 )
         );
     }
@@ -258,7 +265,7 @@ public class ContainerUtilsTest {
         );
     }
 
-    @DisplayName("should send simulate transmition errors with every byte by inverting random bit")
+    @DisplayName("should send simulate transmission errors with every byte by inverting random bit")
     @ParameterizedTest(name = "{index} => expected={0}, given={1}, seed={2}")
     @MethodSource("sendArgumentsProvider")
     void send(String expected, String given, int seed) {
@@ -291,7 +298,7 @@ public class ContainerUtilsTest {
         );
     }
 
-    @DisplayName("should decode() revert encoded message that may contain some transmition errors")
+    @DisplayName("should decode() revert encoded message that may contain some transmission errors")
     @ParameterizedTest(name = "{index} => expected={0}, source={1}")
     @MethodSource("decodeArgumentsProvider")
     void decode(String expected, String source) {
