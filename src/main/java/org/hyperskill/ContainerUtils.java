@@ -93,7 +93,7 @@ public class ContainerUtils {
         }
         if (source.length() > 0) {
             while (source.length() < 3) {
-                source.insert(source.length() - 1, "0");
+                source.insert(source.length(), "0");
             }
             String section = source.toString();
             section = addParity(section);
