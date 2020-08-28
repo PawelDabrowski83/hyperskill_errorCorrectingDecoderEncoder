@@ -52,7 +52,31 @@ public class HammingEncoder {
     }
 
     protected String encodeSubstring(String substring) {
+        StringBuilder builder = new StringBuilder(substring);
+
         return "";
+    }
+
+    protected String calculateParity(String substring, int startingPosition, int step) {
+        boolean parity = false;
+        for (int i = startingPosition; i < substring.length(); i += step) {
+            if (substring.toCharArray()[i] == '1') {
+                parity = !parity;
+            }
+        }
+        return parity ? "1" : "0";
+    }
+
+    /**
+     * transform 4 data bytes into pattern with parity placeholders 00X0XXX0
+     * @param builder 4 data bits represented by string
+     * @return string-byte with parity placeholders
+     */
+    protected StringBuilder insertHammingCodePlaceholders(StringBuilder builder) {
+        builder.insert(0, "00");
+        builder.insert(3, "0");
+        builder.insert(7, "0");
+        return builder;
     }
 }
 
