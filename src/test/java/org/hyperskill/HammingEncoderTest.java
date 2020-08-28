@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.hyperskill.HammingEncoder.HammingCode;
 
 public class HammingEncoderTest {
 
@@ -123,6 +124,63 @@ public class HammingEncoderTest {
                 Arguments.of(
                         new StringBuilder("00001110"),
                         new StringBuilder("0111")
+                )
+        );
+    }
+
+    @DisplayName("should calculateParity() return proper bit-string for Hamming code")
+    @ParameterizedTest
+    @MethodSource("calculateParityArgumentsProvider")
+    void calculateParity(String expected, String substring, HammingCode hammingCode) {
+        HammingEncoder encoder = new HammingEncoder("");
+        assertEquals(expected, encoder.calculateParity(substring, hammingCode));
+    }
+    private static Stream<Arguments> calculateParityArgumentsProvider() {
+        return Stream.of(
+                Arguments.of(
+                        "1",
+                        "00100100",
+                        HammingCode.P1
+                ),
+                Arguments.of(
+                        "0",
+                        "10100100",
+                        HammingCode.P2
+                ),
+                Arguments.of(
+                        "1",
+                        "10100100",
+                        HammingCode.P4
+                ),
+                Arguments.of(
+                        "0",
+                        "00001010",
+                        HammingCode.P1
+                ),
+                Arguments.of(
+                        "1",
+                        "00001010",
+                        HammingCode.P2
+                ),
+                Arguments.of(
+                        "0",
+                        "01001010",
+                        HammingCode.P4
+                ),
+                Arguments.of(
+                        "1",
+                        "00001000",
+                        HammingCode.P1
+                ),
+                Arguments.of(
+                        "0",
+                        "10001000",
+                        HammingCode.P2
+                ),
+                Arguments.of(
+                        "1",
+                        "10001000",
+                        HammingCode.P4
                 )
         );
     }

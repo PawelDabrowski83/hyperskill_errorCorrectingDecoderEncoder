@@ -57,14 +57,35 @@ public class HammingEncoder {
         return "";
     }
 
-    protected String calculateParity(String substring, int startingPosition, int step) {
+    protected String calculateParity(String substring, HammingCode hammingCode) {
+        int hammingCodeStep = hammingCode.step;
         boolean parity = false;
-        for (int i = startingPosition; i < substring.length(); i += step) {
-            if (substring.toCharArray()[i] == '1') {
-                parity = !parity;
+        int currentPosition = hammingCodeStep - 1;
+        int counter = hammingCodeStep;
+        while (currentPosition < substring.length()) {
+            if (counter > 0) {
+                if (substring.charAt(currentPosition) == '1') {
+                    parity = !parity;
+                }
+                counter--;
+            } else {
+                currentPosition += hammingCodeStep - 1;
+                counter = hammingCodeStep;
             }
+            currentPosition++;
         }
+
         return parity ? "1" : "0";
+    }
+
+    public enum HammingCode{
+        P1(1), P2(2), P4(4);
+
+        public final int step;
+
+        HammingCode(int step) {
+            this.step = step;
+        }
     }
 
     /**
