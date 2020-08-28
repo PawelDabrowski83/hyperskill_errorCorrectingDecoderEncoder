@@ -48,16 +48,26 @@ public class HammingEncoder {
         if (text.isEmpty() || text.length() % 8 != 0) {
             return "";
         }
-        return "";
+        StringBuilder source = new StringBuilder(text);
+        StringBuilder target = new StringBuilder();
+        while (source.length() > 0) {
+            String str = source.substring(0, 4);
+            source.delete(0, 4);
+            target.append(encodeSubstring(str));
+        }
+        return target.toString();
     }
 
     protected String encodeSubstring(String substring) {
         StringBuilder builder = new StringBuilder(substring);
-
-        return "";
+        builder = insertHammingCodePlaceholders(builder);
+        builder.setCharAt(0, calculateParity(builder.toString(), HammingCode.P1));
+        builder.setCharAt(1, calculateParity(builder.toString(), HammingCode.P2));
+        builder.setCharAt(3, calculateParity(builder.toString(), HammingCode.P4));
+        return builder.toString();
     }
 
-    protected String calculateParity(String substring, HammingCode hammingCode) {
+    protected char calculateParity(String substring, HammingCode hammingCode) {
         int hammingCodeStep = hammingCode.step;
         boolean parity = false;
         int currentPosition = hammingCodeStep - 1;
@@ -75,7 +85,7 @@ public class HammingEncoder {
             currentPosition++;
         }
 
-        return parity ? "1" : "0";
+        return parity ? '1' : '0';
     }
 
     public enum HammingCode{

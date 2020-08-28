@@ -131,54 +131,54 @@ public class HammingEncoderTest {
     @DisplayName("should calculateParity() return proper bit-string for Hamming code")
     @ParameterizedTest
     @MethodSource("calculateParityArgumentsProvider")
-    void calculateParity(String expected, String substring, HammingCode hammingCode) {
+    void calculateParity(char expected, String substring, HammingCode hammingCode) {
         HammingEncoder encoder = new HammingEncoder("");
         assertEquals(expected, encoder.calculateParity(substring, hammingCode));
     }
     private static Stream<Arguments> calculateParityArgumentsProvider() {
         return Stream.of(
                 Arguments.of(
-                        "1",
+                        '1',
                         "00100100",
                         HammingCode.P1
                 ),
                 Arguments.of(
-                        "0",
+                        '0',
                         "10100100",
                         HammingCode.P2
                 ),
                 Arguments.of(
-                        "1",
+                        '1',
                         "10100100",
                         HammingCode.P4
                 ),
                 Arguments.of(
-                        "0",
+                        '0',
                         "00001010",
                         HammingCode.P1
                 ),
                 Arguments.of(
-                        "1",
+                        '1',
                         "00001010",
                         HammingCode.P2
                 ),
                 Arguments.of(
-                        "0",
+                        '0',
                         "01001010",
                         HammingCode.P4
                 ),
                 Arguments.of(
-                        "1",
+                        '1',
                         "00001000",
                         HammingCode.P1
                 ),
                 Arguments.of(
-                        "0",
+                        '0',
                         "10001000",
                         HammingCode.P2
                 ),
                 Arguments.of(
-                        "1",
+                        '1',
                         "10001000",
                         HammingCode.P4
                 )
