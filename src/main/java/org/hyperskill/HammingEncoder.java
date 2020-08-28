@@ -44,6 +44,10 @@ public class HammingEncoder {
                 '}';
     }
 
+    /**
+     * encode byte-string representation to hamming code
+     * @return byte-string with parity bits
+     */
     public String encode() {
         if (text.isEmpty() || text.length() % 8 != 0) {
             return "";
@@ -58,6 +62,11 @@ public class HammingEncoder {
         return target.toString();
     }
 
+    /**
+     * Fills 4 data bits string with a hamming code parity bits
+     * @param substring 4-bit string
+     * @return 8-bit string with 4 data bits, 3 parity bits and 0bit on last position
+     */
     protected String encodeSubstring(String substring) {
         StringBuilder builder = new StringBuilder(substring);
         builder = insertHammingCodePlaceholders(builder);
@@ -67,6 +76,12 @@ public class HammingEncoder {
         return builder.toString();
     }
 
+    /**
+     * Calculate parity bit for position given by HammingCode enum
+     * @param substring byte-string with placeholders for hamming code
+     * @param hammingCode P1, P2, P4 - parity bit position
+     * @return parity bit as a char
+     */
     protected char calculateParity(String substring, HammingCode hammingCode) {
         int hammingCodeStep = hammingCode.step;
         boolean parity = false;
@@ -88,6 +103,9 @@ public class HammingEncoder {
         return parity ? '1' : '0';
     }
 
+    /**
+     * position of hamming code parity bit
+     */
     public enum HammingCode{
         P1(1), P2(2), P4(4);
 
