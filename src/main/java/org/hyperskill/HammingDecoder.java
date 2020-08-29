@@ -2,6 +2,7 @@ package org.hyperskill;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
+import static org.hyperskill.HammingEncoder.HammingCode;
 
 public class HammingDecoder {
 
@@ -57,8 +58,35 @@ public class HammingDecoder {
         return target.toString();
     }
 
-    public String correctNoise(String given) {
-        return "";
+    public String correctNoise(String binary) {
+        HammingEncoder encoder = new HammingEncoder("");
+        StringBuilder source = new StringBuilder(binary);
+        int checkP4 = encoder.calculateParity(source.toString(), HammingCode.P4) == '1' ? 1 : 0;
+        int checkP2 = encoder.calculateParity(source.toString(), HammingCode.P2) == '1' ? 1 : 0;
+        int checkP1 = encoder.calculateParity(source.toString(), HammingCode.P1) == '1' ? 1 : 0;
+
+        int position = 0;
+        if (checkP1 == 1) {
+            position += 1;
+        }
+        if (checkP2 == 1) {
+            position += 2;
+        }
+        if (checkP4 == 1) {
+            position += 4;
+        }
+        if (position == 0) {
+            return binary;
+        }
+        source = invertBitAt(position - 1, source);
+        return source.toString();
+    }
+
+    protected StringBuilder invertBitAt(int position, StringBuilder builder) {
+        char present = builder.charAt(position);
+        present = present == '1' ? '0' : '1';
+        builder.setCharAt(position, present);
+        return builder;
     }
 
     protected String decodeByte(String substring) {

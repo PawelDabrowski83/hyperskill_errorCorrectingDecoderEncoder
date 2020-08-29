@@ -1,6 +1,5 @@
 package org.hyperskill;
 
-import org.hyperskill.HammingDecoder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -86,8 +85,8 @@ public class HammingDecoderTest {
                         "10010000"
                 ),
                 Arguments.of(
-                        "10010000",
-                        "10010000"
+                        "10011000",
+                        "10011000"
                 ),
                 Arguments.of(
                         "",
