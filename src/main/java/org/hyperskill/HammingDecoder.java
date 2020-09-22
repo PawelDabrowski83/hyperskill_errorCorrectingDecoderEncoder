@@ -58,7 +58,7 @@ public class HammingDecoder {
         return target.toString();
     }
 
-    public String correctNoise(String binary) {
+    protected String correctByte(String binary) {
         HammingEncoder encoder = new HammingEncoder("");
         StringBuilder source = new StringBuilder(binary);
         int checkP4 = encoder.calculateParity(source.toString(), HammingCode.P4) == '1' ? 1 : 0;
@@ -80,6 +80,23 @@ public class HammingDecoder {
         }
         source = invertBitAt(position - 1, source);
         return source.toString();
+    }
+
+    public String correctNoise(String binary) {
+        if (binary == null || binary.isBlank() || binary.length() % 8 != 0){
+            return "";
+        }
+        if (binary.length() == 8){
+            return correctByte(binary);
+        }
+        StringBuilder source = new StringBuilder(binary);
+        StringBuilder target = new StringBuilder();
+        while (source.length() > 0){
+            String substring = source.substring(0, 8);
+            source.delete(0, 8);
+            target.append(correctByte(substring));
+        }
+        return target.toString();
     }
 
     protected StringBuilder invertBitAt(int position, StringBuilder builder) {

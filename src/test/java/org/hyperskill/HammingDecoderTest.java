@@ -15,7 +15,7 @@ public class HammingDecoderTest {
     @ParameterizedTest
     @MethodSource("decodeArgumentsProvider")
     void decode(String expected, String given) {
-        HammingDecoder decoder = new HammingDecoder("");
+        HammingDecoder decoder = new HammingDecoder(given);
         assertEquals(expected, decoder.decode());
     }
     private static Stream<Arguments> decodeArgumentsProvider() {
@@ -39,6 +39,10 @@ public class HammingDecoderTest {
                 Arguments.of(
                         "",
                         ""
+                ),
+                Arguments.of(
+                        "01000100",
+                        "1000100010001000"
                 )
         );
     }
@@ -91,6 +95,14 @@ public class HammingDecoderTest {
                 Arguments.of(
                         "",
                         ""
+                ),
+                Arguments.of(
+                        "10011000",
+                        "10001000"
+                ),
+                Arguments.of(
+                        "1001100010011000",
+                        "1000100010001000"
                 )
         );
     }
